@@ -1,0 +1,14 @@
+#cloud-config
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc... root@rancher
+rancher:
+  docker:
+    engine: docker-1.12.6
+write_files:
+  - path: /etc/rc.local
+    permissions: "0755"
+    owner: root
+    content: |
+      #!/bin/bash
+      wait-for-docker
+      docker run --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.2.6 http://142.44.165.226:8080/v1/scripts/97C7CA43D54CDB8A170A:1483142400000:XfoIDP1nyK9RrLgUMxMhQXEEydY
